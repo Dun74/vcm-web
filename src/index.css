@@ -1,0 +1,17 @@
+@font-face{
+  font-family:"jw-icons-external";
+  src:url("https://assetsnffrgf-a.akamaihd.net/assets/ct/bd26231fad/fonts/jw-icons-external-1970474.woff") format("woff"),url("https://assetsnffrgf-a.akamaihd.net/assets/ct/bd26231fad/fonts/jw-icons-external-1970474.ttf") format("truetype");
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#root {
+  position: absolute;
+  left:0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}

@@ -1,0 +1,59 @@
+.root {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+.header {
+    height: 32px;
+    box-shadow: 0 4px 4px -4px gray;
+    padding-left: 20px;
+    line-height: 32px;
+    z-index: 10;
+}
+
+.middleContainer {
+    width: 200px;
+    height: 100%;
+    box-shadow: 4px 0 4px -4px gray;
+}
+
+.rightContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.footer {
+    height: 20px;
+    background-color: lightgray;
+}
+
+.leftPane {
+    background-color: #2C504C;
+    height: 100%;
+    box-shadow: 4px 0 4px -4px gray;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.rightPane {
+    width: 200px;
+}
+
+.centralPane {
+    position: relative;
+    flex: auto;
+    overflow: auto;
+}
+
+.leftMenuItem {
+    white-space: nowrap;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 80%;
+    color: white;
+}
+
