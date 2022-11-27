@@ -1,0 +1,19 @@
+.programTable {
+    border-collapse: collapse;
+    width:fit-content;
+} 
+
+.programTable td, .programTable th {
+    border: 1px solid black;
+    padding: 4px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.programTable td::first-letter {
+    text-transform:capitalize;
+}
+
+.programTable th {
+    background-color: rgb(144, 204, 160);
+}

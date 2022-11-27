@@ -11,5 +11,16 @@
 }
 
 .schoolDbTable th {
-    background-color: lightgray;
+    background-color: rgb(144, 204, 160);
+} 
+
+.whatsapp_icon {
+    display: none;
+    float: right;
+    cursor: pointer;
+    color: green;
+}
+
+.whatsapp:hover .whatsapp_icon {
+    display: block;
 }

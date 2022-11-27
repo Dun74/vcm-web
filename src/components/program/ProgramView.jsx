@@ -175,7 +175,7 @@ const Week = ({ week, color, onChange, onAssign }) => {
       <tr className={styles.header} style={{ backgroundColor: '#626262' }}>
         <td><div className={styles.treasuresIcon}></div></td>
         <td>&nbsp;</td>
-        <td colSpan={6 - schoolsNum}>{trads?.gem ?? 'JOYAUX DE LA PAROLE DE DIEU'}</td>
+        <td colSpan={6 - schoolsNum}>{trads?.gem.toUpperCase() ?? 'JOYAUX DE LA PAROLE DE DIEU'}</td>
         {schoolsNum > 2 && <td className={styles.centered}>{week.schools[2].name}</td>}
         {schoolsNum > 1 && <td className={styles.centered}>{week.schools[1].name}</td>}
         {schoolsNum > 0 && <td className={styles.centered}><div style={{ cursor: 'pointer' }} onContextMenu={e => {
@@ -259,7 +259,7 @@ const Week = ({ week, color, onChange, onAssign }) => {
       <tr className={styles.header} style={{ backgroundColor: '#c48430' }}>
         <td><div className={styles.treasuresIcon}></div></td>
         <td>&nbsp;</td>
-        <td colSpan={(schoolsNum === 3 ? 5 : 6) - schoolsNum}>{trads?.school ?? 'APPLIQUE-TOI AU MINISTÈRE'}</td>
+        <td colSpan={(schoolsNum === 3 ? 5 : 6) - schoolsNum}>{trads?.school.toUpperCase() ?? 'APPLIQUE-TOI AU MINISTÈRE'}</td>
         {schoolsNum > 2 && <td colSpan={2} className={styles.centered}>{week.schools[2].name}</td>}
         {schoolsNum > 1 && <td className={styles.centered}>{week.schools[1].name}</td>}
         {schoolsNum > 0 && <td className={styles.centered}>{week.schools[0].name}</td>}
@@ -320,7 +320,7 @@ const Week = ({ week, color, onChange, onAssign }) => {
           {week.vcm.parts[index]?.reader && <MenuItem onClick={(e) => { e.stopPropagation; week.vcm.parts[index].reader = undefined; onChange(week) }}>VCM</MenuItem>}
           {index < week.vcm.parts.length && <MenuItem onClick={(e) => { e.stopPropagation; week.vcm.parts.splice(index, 1); onChange(week) }}>Supprimer</MenuItem>}
         </ControlledMenu></td>
-        <td colSpan={4}>{trads?.vcm ?? 'VIE CHRÉTIENNE'}</td>
+        <td colSpan={4}>{trads?.vcm.toUpperCase() ?? 'VIE CHRÉTIENNE'}</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
       </tr>

@@ -1,13 +1,24 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { useEffect, useState } from "react";
 import { BsTrash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import styles from './program.module.css'
 
 const Programs = () => {
 
     const [progs, setProgs] = useState([]);
-    const [newProgs, setNewProgs] = useState("01/2022");
+    const [newProgMonth, setNewProgMonth] = useState(format(new Date(), 'MM'));
+    const [newProgYear, setNewProgYear] = useState(format(new Date(), 'yyyy'));
+
+    const months = [...Array(12).keys()].map(k => { return format(new Date().setMonth(k), 'MMMM', { locale: fr }) });
+    const years = [...Array(3).keys()].map(k => { return new Date().getFullYear() - 1 + k });
 
     const navigate = useNavigate();
+
+    function pad(a, b) {
+        return (1e15 + a + '').slice(-b);
+    }
 
     useEffect(() => {
         const progs = [];
@@ -24,12 +35,34 @@ const Programs = () => {
 
     return (
         <div style={{ padding: '10px' }}>
-            {progs.sort((a, b) => a.split("/").reverse().join("/").localeCompare(b.split("/").reverse().join("/"))).map((k, i) => {
-                return <Fragment key={i}><Link to={`program/${k.replace(/\//, '-')}`}>{`Programme ${k}`}</Link>&nbsp;<BsTrash style={{ cursor: 'pointer' }} onClick={() => { if (confirm("Voulez-vous vraiment supprimer ce programme ?")) { localStorage.removeItem(k); setProgs(progs.filter(p => p !== k)) } }} /><br /></Fragment>
-            })}
-            <br /><br />
-            <input type="text" size={7} maxLength={7} value={newProgs} onChange={(event) => { setNewProgs(event.target.value) }} />
-            <button onClick={() => { navigate(`program/${newProgs.replace(/\//, '-')}`) }}>Nouveau</button>
+
+            <div style={{ marginBottom: '5px' }}>
+                <select value={newProgMonth} onChange={(event) => { setNewProgMonth(event.target.value) }}>{
+                    months.map((month, index) => { return (<option key={index} value={pad(index + 1, 2)}>{month}</option>) })}</select>
+                <select value={newProgYear} onChange={(event) => { setNewProgYear(event.target.value) }}>{
+                    years.map((year, index) => { return (<option key={index} value={year}>{year}</option>) })}</select>
+
+                <button onClick={() => { navigate(`program/${newProgMonth}-${newProgYear}`) }}>Nouveau</button>
+            </div>
+            <table className={styles.programTable}>
+                <thead>
+                    <tr>
+                        <th>Mois</th>
+                        <th>Programme</th>
+                        <th>Fiches devoir</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {progs.sort((a, b) => a.split("/").reverse().join("/").localeCompare(b.split("/").reverse().join("/"))).map((k, i) => {
+                        return <tr key={i}>
+                            <td>{format(new Date(k.split(/\//)[1], k.split(/\//)[0] - 1, 1), 'MMMM yyyy', { locale: fr })}</td>
+                            <td><Link to={`program/${k.replace(/\//, '-')}`}>{`Programme ${k}`}</Link></td>
+                            <td><Link to={`s89/${k.replace(/\//, '-')}`}>{`Fiches devoir ${k}`}</Link></td>
+                            <td><BsTrash style={{ cursor: 'pointer' }} onClick={() => { if (confirm("Voulez-vous vraiment supprimer ce programme ?")) { localStorage.removeItem(k); setProgs(progs.filter(p => p !== k)) } }} /></td></tr>
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }

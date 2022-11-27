@@ -4,18 +4,15 @@ import nextThursday from 'date-fns/nextThursday'
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
 import ProgramView from './ProgramView'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Assigner from './Assigner'
 import { TranslationContext } from '../TranslationContext';
-import styles from './program.module.css'
-import MenuIcon from '../MenuIcon';
-import { BsBook, BsBriefcase, BsGear, BsHouseDoor, BsPeople } from 'react-icons/bs';
 import { PrintContext } from '../PrintContext';
 
 const ProgramEditor = () => {
     let { id } = useParams();
     id = id.replace(/-/, '\/');
-    const meetingDay = JSON.parse(localStorage.getItem('params')).weekDay;
+    const meetingDay = JSON.parse(localStorage.getItem('params'))?.weekDay ?? 4;
 
     const { trads } = useContext(TranslationContext)
 
@@ -156,14 +153,14 @@ const ProgramEditor = () => {
                 <ProgramView month={monthProg} onUpdate={updateMonthProg} onAssign={(slot, callback) => { setAssignSlot(slot); setAssignCallback(() => { setAssignCallback(() => callback) }) }} />
             </div>
             {!print && <>
-                <div style={{ backgroundColor: 'lightgray', position: 'fixed', top: '74px', right: '20px', width: '300px', padding: '5px' }}>
+                <div style={{ backgroundColor: 'rgb(144, 204, 160)', position: 'fixed', top: '34px', right: '20px', width: '300px', padding: '5px' }}>
                     <Assigner slot={assignSlot} callback={assignCallback} />
                     <br />
                     <b>Notes</b><br />
-                    <textarea style={{ width: '100%', height: '200px' }} value={monthProg.notes} onChange={(e) => { monthProg.notes = e.target.value; updateMonthProg(monthProg) }} />
+                    <textarea style={{ width: '295px', height: '100px' }} value={monthProg.notes} onChange={(e) => { monthProg.notes = e.target.value; updateMonthProg(monthProg) }} />
 
                     <b>Semaine JSON</b><br />
-                    <textarea style={{ width: '100%', height: '200px' }} value={weekDef} onChange={(e) => setWeekDef(e.target.value)} />
+                    <textarea style={{ width: '295px', height: '100px' }} value={weekDef} onChange={(e) => setWeekDef(e.target.value)} />
                     {// @ts-ignore
                         assignSlot.date && weekDef.length > 0 && <button onClick={() => {
                             monthProg.weeks = monthProg.weeks.map((w) => {
@@ -185,9 +182,7 @@ const ProgramEditor = () => {
                     })}
 
                 </div>
-                <div style={{ backgroundColor: 'lightgray', position: 'fixed', top: '32px', right: '20px', width: '300px', height: '32px', padding: '5px' }}>
-                    <button onClick={() => { setPrint(true) }}>Imprimer</button>&nbsp;
-                </div>
+
             </>}
         </div >
 

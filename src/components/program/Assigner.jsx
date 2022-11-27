@@ -3,6 +3,7 @@ import { formatISO, format, parseISO } from 'date-fns'
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
 import { TranslationContext } from '../TranslationContext';
+import styles from './program.module.css'
 
 const Assigner = ({ slot, callback }) => {
 
@@ -40,9 +41,9 @@ const Assigner = ({ slot, callback }) => {
     const { trads } = useContext(TranslationContext)
 
     return (
-        <div ><b>Attribuer </b><br />
-            {slot?.type && <>
-                {trads[slot?.type] ?? slot?.type}<br />
+        <div> <b>Attribuer </b><br />
+            {slot?.type && <div style={{ textAlign: 'center' }}>
+                <div className={styles.firstCap}>{trads[slot?.type] ?? slot?.type}</div>
                 {slot?.date && <>{format(slot?.date, 'dd/MM/yyyy')}<br /></>}
                 {!slot?.db && <select value={selectedBrother} onChange={(e) => { setSelectedBrother(e.target.value) }}>
                     {brothers.filter(b => b.active == true && b[slot.type]).sort((a, b) => {
@@ -129,7 +130,7 @@ const Assigner = ({ slot, callback }) => {
                     setSelectedStudent("");
                     setSelectedStudent2("");
                 }}>Attribuer</button><br />
-            </>}
+            </div>}
             {!slot?.type && <span>Sélectionner une partie à attribuer<br /></span>}
 
         </div>

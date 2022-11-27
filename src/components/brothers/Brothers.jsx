@@ -19,7 +19,7 @@ function Brothers() {
   return (
     <div style={{ padding: '10px' }}>
       <div style={{ position: 'relative' }}>
-        <div style={{ position: 'sticky', top: '0px', zIndex: 1, backgroundColor: 'white' }}>
+        <div style={{ position: 'sticky', top: '0px', zIndex: 1, backgroundColor: 'white', marginBottom: '5px' }}>
           <button onClick={() => { brothers.push({ name: 'Prénom Nom' }); updateBrotherList([...brothers]) }}>Ajouter</button>
         </div>
         <table className={styles.brotherTable}>
