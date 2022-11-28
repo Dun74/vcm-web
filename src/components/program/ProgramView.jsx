@@ -129,7 +129,7 @@ const Week = ({ week, color, onChange, onAssign }) => {
       });
     });
     if (week.leave?.trim()?.length > 0) {
-      nameList = nameList.concat(week.leave?.split(/,\s?+/));
+      nameList = nameList.concat(week.leave?.split(/,\s*/));
     }
     return nameList.filter(n => n && n.length > 0);
   }
