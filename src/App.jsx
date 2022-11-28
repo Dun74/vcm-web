@@ -78,7 +78,7 @@ const App = () => {
                   <Route path="/settings" element={<Settings onReload={onReload} />} />
                 </Routes>
               </div>
-              {!print && <div className={styles.footer}><div style={{ fontSize: '60%', marginTop: '5px', marginRight: '10px', float: 'right' }}>v2022.11.27</div></div>}
+              {!print && <div className={styles.footer}><div style={{ fontSize: '60%', marginTop: '5px', marginRight: '10px', float: 'right' }}>v2022.11.28</div></div>}
             </div>
 
           </div >

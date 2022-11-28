@@ -34,7 +34,7 @@ const Programs = () => {
 
 
     return (
-        <div style={{ padding: '10px' }}>
+        <div style={{ padding: '10px', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
 
             <div style={{ marginBottom: '5px' }}>
                 <select value={newProgMonth} onChange={(event) => { setNewProgMonth(event.target.value) }}>{
@@ -56,7 +56,7 @@ const Programs = () => {
                 <tbody>
                     {progs.sort((a, b) => a.split("/").reverse().join("/").localeCompare(b.split("/").reverse().join("/"))).map((k, i) => {
                         return <tr key={i}>
-                            <td>{format(new Date(k.split(/\//)[1], k.split(/\//)[0] - 1, 1), 'MMMM yyyy', { locale: fr })}</td>
+                            <td><b>{format(new Date(k.split(/\//)[1], k.split(/\//)[0] - 1, 1), 'MMMM yyyy', { locale: fr })}</b></td>
                             <td><Link to={`program/${k.replace(/\//, '-')}`}>{`Programme ${k}`}</Link></td>
                             <td><Link to={`s89/${k.replace(/\//, '-')}`}>{`Fiches devoir ${k}`}</Link></td>
                             <td><BsTrash style={{ cursor: 'pointer' }} onClick={() => { if (confirm("Voulez-vous vraiment supprimer ce programme ?")) { localStorage.removeItem(k); setProgs(progs.filter(p => p !== k)) } }} /></td></tr>

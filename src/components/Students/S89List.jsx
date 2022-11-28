@@ -47,21 +47,20 @@ const S89List = () => {
     }, []);
 
     useEffect(() => {
-        if (studentList.length > 0) {
-            const monthProg = JSON.parse(localStorage.getItem(id));
-            if (monthProg) {
-                let monthStudents = [];
-                monthProg.weeks.forEach(w => {
-                    w.schools.forEach(s => {
-                        monthStudents.push({ selected: false, date: w.date, school: s.name, phone: getNumber(s.reading), type: trads['reading'], student: s.reading, lesson: s.readingLesson });
-                        s.parts.forEach((p, index) => {
-                            monthStudents.push({ selected: false, date: w.date, school: s.name, phone: getNumber(p.students[0]), type: w.schools[0].parts[index].title, student: p.students[0], helper: p.students[1], lesson: p.lesson });
-                        })
+        const monthProg = JSON.parse(localStorage.getItem(id));
+        if (monthProg) {
+            let monthStudents = [];
+            monthProg.weeks.forEach(w => {
+                w.schools.forEach(s => {
+                    monthStudents.push({ selected: false, date: w.date, school: s.name, phone: getNumber(s.reading), type: trads['reading'], student: s.reading, lesson: s.readingLesson });
+                    s.parts.forEach((p, index) => {
+                        monthStudents.push({ selected: false, date: w.date, school: s.name, phone: getNumber(p.students[0]), type: w.schools[0].parts[index].title, student: p.students[0], helper: p.students[1], lesson: p.lesson });
                     })
                 })
-                setMonthStudents(monthStudents);
-            }
+            })
+            setMonthStudents(monthStudents);
         }
+
     }, [studentList])
 
     return (<div>

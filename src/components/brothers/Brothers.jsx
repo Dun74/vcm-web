@@ -17,7 +17,7 @@ function Brothers() {
   }
 
   return (
-    <div style={{ padding: '10px' }}>
+    <div style={{ padding: '10px', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
       <div style={{ position: 'relative' }}>
         <div style={{ position: 'sticky', top: '0px', zIndex: 1, backgroundColor: 'white', marginBottom: '5px' }}>
           <button onClick={() => { brothers.push({ name: 'Prénom Nom' }); updateBrotherList([...brothers]) }}>Ajouter</button>

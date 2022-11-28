@@ -18,7 +18,7 @@ function Students() {
   }
 
   return (
-    <div style={{ padding: '10px' }}>
+    <div style={{ padding: '10px', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
       <div style={{ position: 'relative' }}>
         <div style={{ position: 'sticky', top: '0px', zIndex: 1, marginBottom: '5px', backgroundColor: 'white' }}>
           <button onClick={() => { studentList.push({ name: 'Prénom Nom' }); updateStudentList(studentList) }}>Ajouter</button>

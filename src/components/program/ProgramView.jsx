@@ -29,7 +29,7 @@ const ProgramView = ({ month: monthProg, onAssign, onUpdate }) => {
             return (
               <Fragment key={i}>
                 <Week week={w} color={monthProg.color} onChange={(week) => { monthProg.weeks[i] = week; updateMonthProg(monthProg) }} onAssign={onAssign} />
-                {(i + 1) % 2 == 0 && <>
+                {(i + 1) % 2 == 0 && print && <>
                   <Spacer color={monthProg.color} />
                   {print && i < wks.length - 1 && <>
                     <tr className={styles.pageBreak}></tr>
@@ -111,28 +111,36 @@ const Week = ({ week, color, onChange, onAssign }) => {
 
 
   const getUsedList = (week) => {
-    const nameList = [];
+    let nameList = [];
     nameList.push(week.priers[0]);
     nameList.push(week.priers[1]);
     nameList.push(week.chairMan);
     nameList.push(week.gem.speaker);
     nameList.push(week.pearls.speaker);
-    Array.prototype.push.apply(nameList, week.vcm.parts.map(p => { return p.speaker }));
-    Array.prototype.push.apply(nameList, week.leave?.split(','));
+    nameList = nameList.concat(week.vcm.parts.map(p => { return p.speaker }));
 
     week.schools.forEach(school => {
-      Array.prototype.push.apply(nameList, school.parts.map(p => { return p.speaker }));
+      nameList.push(school.chairMan);
+      school.parts.forEach(p => {
+        nameList.push(p.students[0]);
+        if (p.students[1]) {
+          nameList.push(p.students[1])
+        }
+      });
     });
-    return nameList;
+    if (week.leave?.trim()?.length > 0) {
+      nameList = nameList.concat(week.leave?.split(/,\s?+/));
+    }
+    return nameList.filter(n => n && n.length > 0);
   }
 
   const checkAlreadyExist = (week, speaker) => {
 
-    if (print) {
+    if (print || !speaker || speaker.length == 0) {
       return false;
     }
     const nameList = getUsedList(week);
-
+    //console.log(nameList.join(','))
     if (nameList.filter(n => speaker.includes(n)).length > 1) {
       return true;
     }
@@ -285,7 +293,7 @@ const Week = ({ week, color, onChange, onAssign }) => {
               </ControlledMenu>}</td>
             {
               schoolsNum > 2 && <td colSpan={2} className={`${styles.assigned} ${styles.centered}`}>
-                <div style={{ whiteSpace: 'nowrap', marginLeft: (week.schools[2].parts[i].students.join(" / ").length > 20 ? '-30px' : undefined) }} contentEditable={week.schools[2].parts[i].freeText !== undefined} suppressContentEditableWarning={true}
+                <div className={(checkAlreadyExist(week, week.schools[2].parts[i].students[0]) || checkAlreadyExist(week, week.schools[2].parts[i].students[1])) ? styles.red : ''} style={{ whiteSpace: 'nowrap', marginLeft: (week.schools[2].parts[i].students.join(" / ").length > 20 ? '-30px' : undefined) }} contentEditable={week.schools[2].parts[i].freeText !== undefined} suppressContentEditableWarning={true}
                   onClick={week.schools[2].parts[i].freeText == undefined ? (e) => { onAssign({ db: 'school', dualMode: week.schools[0].parts[i].type === 'school_talk' ? false : true, type: week.schools[0].parts[i].type ?? 'school_discuss', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[2].parts[i].students = brother.split(" / "), onChange(week) }) } : null}
                   onBlur={week.schools[2].parts[i].freeText !== undefined ? event => { week.schools[2].parts[i].freeText = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[2].parts[i].freeText ?? week.schools[2].parts[i].students.join(" / ")}</div>
 
@@ -293,7 +301,7 @@ const Week = ({ week, color, onChange, onAssign }) => {
             }
             {
               schoolsNum > 1 && <td className={`${styles.assigned} ${styles.centered}`}>
-                <div style={{ whiteSpace: 'nowrap' }} contentEditable={week.schools[1].parts[i].freeText != undefined} suppressContentEditableWarning={true}
+                <div className={(checkAlreadyExist(week, week.schools[1].parts[i].students[0]) || checkAlreadyExist(week, week.schools[1].parts[i].students[1])) ? styles.red : ''} style={{ whiteSpace: 'nowrap' }} contentEditable={week.schools[1].parts[i].freeText != undefined} suppressContentEditableWarning={true}
                   onClick={week.schools[1].parts[i].freeText == undefined ? (e) => { onAssign({ db: 'school', dualMode: week.schools[0].parts[i].type === 'school_talk' ? false : true, type: week.schools[0].parts[i].type ?? 'school_discuss', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[1].parts[i].students = brother.split(" / "), onChange(week) }) } : null}
                   onBlur={week.schools[1].parts[i].freeText != undefined ? event => { week.schools[1].parts[i].freeText = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[1].parts[i].freeText ?? week.schools[1].parts[i].students.join(" / ")}</div>
 
@@ -301,7 +309,7 @@ const Week = ({ week, color, onChange, onAssign }) => {
             }
             {
               schoolsNum > 0 && <td className={`${styles.assigned} ${styles.centered}`}>
-                <div style={{ whiteSpace: 'nowrap' }} contentEditable={week.schools[0].parts[i].freeText != undefined} suppressContentEditableWarning={true}
+                <div className={(checkAlreadyExist(week, week.schools[0].parts[i].students[0]) || checkAlreadyExist(week, week.schools[0].parts[i].students[1])) ? styles.red : ''} style={{ whiteSpace: 'nowrap' }} contentEditable={week.schools[0].parts[i].freeText != undefined} suppressContentEditableWarning={true}
                   onClick={week.schools[0].parts[i].freeText == undefined ? (e) => { onAssign({ db: 'school', dualMode: week.schools[0].parts[i].type === 'school_talk' ? false : true, type: week.schools[0].parts[i].type ?? 'school_discuss', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[0].parts[i].students = brother.split(" / "), onChange(week) }) } : null}
                   onBlur={week.schools[0].parts[i].freeText != undefined ? event => { week.schools[0].parts[i].freeText = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[0].parts[i].freeText ?? week.schools[0].parts[i].students.join(" / ")}</div>
               </td>
