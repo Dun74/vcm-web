@@ -26,7 +26,14 @@ const S89List = () => {
     const getNumber = (name) => {
         let phone = studentList.filter(s => s.name == name)[0]?.phone;
         if (phone) {
-            return '33' + phone.substring(1);
+
+            if (phone.startsWith('+')) {
+                return phone.substring(1).replaceAll(" ", "");
+            }
+            else {
+                return '33' + phone.substring(1).replaceAll(" ", "");
+            }
+
         }
     }
 

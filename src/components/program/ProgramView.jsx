@@ -248,18 +248,18 @@ const Week = ({ week, color, onChange, onAssign }) => {
         <td className={styles.bold} colSpan={(schoolsNum === 3 ? 6 : 7) - schoolsNum}>{trads?.reading ?? 'Lecture de la Bible'}</td>
         {schoolsNum > 2 && <td colSpan={2} className={`${styles.assigned} ${styles.centered} ${checkAlreadyExist(week, week.schools[2].reading) ? styles.red : ''}`}>
           <div contentEditable={false} suppressContentEditableWarning={true}
-            onClick={week.schools[2].readingFreeText ? (e) => { onAssign({ db: 'school', type: 'school_reading', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[2].reading = brother, onChange(week) }) } : null}
-            onBlur={week.schools[2].readingFreeText ? event => { week.schools[2].reading = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[2].readingFreeText ?? week.schools[2].reading}</div>
+            onClick={week.schools[2].readingFreeText == undefined ? (e) => { onAssign({ db: 'school', type: 'school_reading', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[2].reading = brother, onChange(week) }) } : null}
+            onBlur={week.schools[2].readingFreeText == undefined ? event => { week.schools[2].reading = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[2].readingFreeText ?? week.schools[2].reading}</div>
         </td>}
         {schoolsNum > 1 && <td className={`${styles.assigned} ${styles.rightAligned} ${checkAlreadyExist(week, week.schools[1].reading) ? styles.red : ''}`}>
           <div contentEditable={false} suppressContentEditableWarning={true}
-            onClick={week.schools[1].readingFreeText ? (e) => { onAssign({ db: 'school', type: 'school_reading', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[1].reading = brother, onChange(week) }) } : null}
-            onBlur={week.schools[1].readingFreeText ? event => { week.schools[1].reading = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[1].readingFreeText ?? week.schools[1].reading}</div>
+            onClick={week.schools[1].readingFreeText == undefined ? (e) => { onAssign({ db: 'school', type: 'school_reading', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[1].reading = brother, onChange(week) }) } : null}
+            onBlur={week.schools[1].readingFreeText == undefined ? event => { week.schools[1].reading = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[1].readingFreeText ?? week.schools[1].reading}</div>
         </td>}
         {schoolsNum > 0 && <td className={`${styles.assigned} ${styles.rightAligned} ${checkAlreadyExist(week, week.schools[0].reading) ? styles.red : ''}`}>
           <div contentEditable={false} suppressContentEditableWarning={true}
-            onClick={week.schools[0].readingFreeText ? (e) => { onAssign({ db: 'school', type: 'school_reading', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[0].reading = brother, onChange(week) }) } : null}
-            onBlur={week.schools[0].readingFreeText ? event => { week.schools[0].reading = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[0].readingFreeText ?? week.schools[0].reading}</div>
+            onClick={week.schools[0].readingFreeText == undefined ? (e) => { onAssign({ db: 'school', type: 'school_reading', date: weekDate, usedList: getUsedList(week) }, brother => { week.schools[0].reading = brother, onChange(week) }) } : null}
+            onBlur={week.schools[0].readingFreeText == undefined ? event => { week.schools[0].reading = event.currentTarget.textContent; onChange(week) } : null}>{week.schools[0].readingFreeText ?? week.schools[0].reading}</div>
         </td>}
       </tr>
 
